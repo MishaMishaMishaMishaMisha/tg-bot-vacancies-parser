@@ -1,0 +1,682 @@
+{
+  "categories": [
+    "2D Animation",
+    "2D Artist",
+    "3D Animation",
+    "3D Artist",
+    "Accountant",
+    "Account Manager",
+    "Advertising",
+    "Affiliate Manager",
+    "Android",
+    "Angular",
+    "Architect",
+    "Artist",
+    "ASIC / Chip Design",
+    "ASP.NET",
+    "Avionics",
+    "Blazor",
+    "Business Analyst",
+    "Business Development",
+    "C++",
+    "CAD Designer",
+    "CBDO",
+    "CCO",
+    "CEO",
+    "CFO",
+    "CIO",
+    "C Lang",
+    "CMO",
+    "Content Design",
+    "Content Manager",
+    "Content Marketing",
+    "Content Writing",
+    "COO",
+    "CPO",
+    "CPP",
+    "Creative and Gaming",
+    "CSO",
+    "CTO",
+    "Data Analyst",
+    "Data Analytics",
+    "Data Engineer",
+    "Data Science",
+    "DefTech",
+    "Delivery Manager",
+    "Design",
+    "Development",
+    "DevOps",
+    "Digital Marketing",
+    "Digital Marketing Manager",
+    "Dotnet Cloud",
+    "Dotnet Desktop",
+    "Dotnet Mobile",
+    "Dotnet Web",
+    "Drupal",
+    "Electrical Engineering",
+    "Electronics / PCB Design",
+    "Electronic Warfare",
+    "Elixir",
+    "Embedded",
+    "Engineering / CAD Design",
+    "Engineering Manager",
+    "ERP",
+    "Finance Manager",
+    "Finances",
+    "Financial Analyst",
+    "FinOps",
+    "Firmware Engineer",
+    "Flutter",
+    "FPGA Engineer",
+    "Fullstack",
+    "Game Design",
+    "Game Developer",
+    "Golang",
+    "Graphic Design",
+    "Hardware",
+    "Hardware Engineer",
+    "Hardware & Engineering",
+    "Head Chief",
+    "HR",
+    "Illustrator",
+    "Industrial Design",
+    "Information Security",
+    "Interviewer",
+    "iOS",
+    "Java",
+    "JavaScript",
+    "Kotlin",
+    "Laravel",
+    "Lead",
+    "Leadership",
+    "Lead Generation",
+    "Level Design",
+    "Magento",
+    "Management",
+    "Marketing",
+    "Marketing Analyst",
+    "Marketing and Sales",
+    "Markup",
+    "MAUI",
+    "Mechanical Engineering",
+    "Media Buying",
+    "Military Software / C4ISR",
+    "ML AI",
+    "Motion Design",
+    "MS Dynamics",
+    ".NET",
+    ".NET Gamedev",
+    "No Code",
+    "Node.js",
+    "Odoo",
+    "Operations",
+    "Other",
+    "other_group",
+    "Other non-tech",
+    "Other tech",
+    "Penetration Tester",
+    "Performance Marketing",
+    "PHP",
+    "PPC",
+    "PR Manager",
+    "Product Design",
+    "Product Manager",
+    "Product Owner",
+    "Project Manager",
+    "Python",
+    "QA",
+    "QA Automation",
+    "QA Hardware / Embedded",
+    "Quality Assurance",
+    "React.js",
+    "React Native",
+    "Recruiter",
+    "RF Engineer",
+    "Robotics Engineer",
+    "Ruby",
+    "Rust",
+    "Sales",
+    "Salesforce",
+    "Sales Leadership",
+    "Sales Manager",
+    "SAP",
+    "Scala",
+    "Scrum Master",
+    "Security",
+    "Security Analyst",
+    "SEO",
+    "Social Media",
+    "SQL",
+    "Support",
+    "Svelte",
+    "Symfony",
+    "Sysadmin",
+    "Talent Acquisition",
+    "Technical Writing",
+    "UAV / Drone Engineer",
+    "UAV / Drone Pilot",
+    "UI UX",
+    "Unity",
+    "Unity Developer",
+    "Unreal Developer",
+    "UX Research",
+    "VFX Artist",
+    "Video Editor",
+    "Vue.js",
+    "Weapons Systems",
+    "Web Analyst",
+    "WinForms",
+    "WordPress",
+    "WPF",
+    "Xamarin",
+    "Yii"
+  ],
+  "cities": [
+    "Київ",
+    "Вінниця",
+    "Дніпро",
+    "Івано-Франківськ",
+    "Житомир",
+    "Запоріжжя",
+    "Львів",
+    "Миколаїв",
+    "Одеса",
+    "Кропивницький",
+    "Луцьк",
+    "Полтава",
+    "Рівне",
+    "Суми",
+    "Тернопіль",
+    "Херсон",
+    "Харків",
+    "Хмельницький",
+    "Черкаси",
+    "Чернігів",
+    "Чернівці",
+    "Ужгород"
+  ],
+  "experiences": [
+    "no_exp",
+    "1y",
+    "2y",
+    "3y",
+    "4y",
+    "5y",
+    "6y",
+    "7y",
+    "8y",
+    "9y",
+    "10y"
+  ],
+  "flags": [],
+  "groups": {
+    "exp_level": [
+      {
+        "value": "no_exp",
+        "label": "Без досвіду"
+      },
+      {
+        "value": "1y",
+        "label": "1 рік"
+      },
+      {
+        "value": "2y",
+        "label": "2 роки"
+      },
+      {
+        "value": "3y",
+        "label": "3 роки"
+      },
+      {
+        "value": "4y",
+        "label": "4 роки"
+      },
+      {
+        "value": "5y",
+        "label": "5 років"
+      },
+      {
+        "value": "6y",
+        "label": "6 років"
+      },
+      {
+        "value": "7y",
+        "label": "7 років"
+      },
+      {
+        "value": "8y",
+        "label": "8 років"
+      },
+      {
+        "value": "9y",
+        "label": "9 років"
+      },
+      {
+        "value": "10y",
+        "label": "10 років та більше"
+      }
+    ],
+    "employment": [
+      {
+        "value": "remote",
+        "label": "Віддалена робота"
+      },
+      {
+        "value": "parttime",
+        "label": "Part-time"
+      },
+      {
+        "value": "office",
+        "label": "Офіс"
+      }
+    ],
+    "english_level": [
+      {
+        "value": "no_english",
+        "label": "No English"
+      },
+      {
+        "value": "basic",
+        "label": "Beginner/Elementary"
+      },
+      {
+        "value": "pre",
+        "label": "Pre-Intermediate"
+      },
+      {
+        "value": "intermediate",
+        "label": "Intermediate"
+      },
+      {
+        "value": "upper",
+        "label": "Upper-Intermediate"
+      },
+      {
+        "value": "fluent",
+        "label": "Advanced/Fluent"
+      },
+      {
+        "value": "proficient",
+        "label": "Proficient"
+      },
+      {
+        "value": "native",
+        "label": "Native Speaker"
+      }
+    ],
+    "region": [
+      {
+        "value": "worldwide",
+        "label": "Весь світ"
+      },
+      {
+        "value": "UKR",
+        "label": "Україна"
+      },
+      {
+        "value": "eu",
+        "label": "Країни ЄС"
+      },
+      {
+        "value": "other",
+        "label": "Інші країни"
+      }
+    ],
+    "location": [
+      {
+        "value": "kyiv",
+        "label": "Київ"
+      },
+      {
+        "value": "vinnytsia",
+        "label": "Вінниця"
+      },
+      {
+        "value": "dnipro",
+        "label": "Дніпро"
+      },
+      {
+        "value": "ivano-frankivsk",
+        "label": "Івано-Франківськ"
+      },
+      {
+        "value": "zhytomyr",
+        "label": "Житомир"
+      },
+      {
+        "value": "zaporizhzhia",
+        "label": "Запоріжжя"
+      },
+      {
+        "value": "lviv",
+        "label": "Львів"
+      },
+      {
+        "value": "mykolaiv",
+        "label": "Миколаїв"
+      },
+      {
+        "value": "odesa",
+        "label": "Одеса"
+      },
+      {
+        "value": "kropyvnytskyi",
+        "label": "Кропивницький"
+      },
+      {
+        "value": "lutsk",
+        "label": "Луцьк"
+      },
+      {
+        "value": "poltava",
+        "label": "Полтава"
+      },
+      {
+        "value": "rivne",
+        "label": "Рівне"
+      },
+      {
+        "value": "sumy",
+        "label": "Суми"
+      },
+      {
+        "value": "ternopil",
+        "label": "Тернопіль"
+      },
+      {
+        "value": "kherson",
+        "label": "Херсон"
+      },
+      {
+        "value": "kharkiv",
+        "label": "Харків"
+      },
+      {
+        "value": "khmelnytskyi",
+        "label": "Хмельницький"
+      },
+      {
+        "value": "cherkasy",
+        "label": "Черкаси"
+      },
+      {
+        "value": "chernihiv",
+        "label": "Чернігів"
+      },
+      {
+        "value": "chernivtsi",
+        "label": "Чернівці"
+      },
+      {
+        "value": "uzhhorod",
+        "label": "Ужгород"
+      }
+    ],
+    "country": [
+      {
+        "value": "UKR",
+        "label": "Україна"
+      },
+      {
+        "value": "POL",
+        "label": "Польща"
+      },
+      {
+        "value": "CYP",
+        "label": "Кіпр"
+      },
+      {
+        "value": "ROU",
+        "label": "Румунія"
+      },
+      {
+        "value": "SVK",
+        "label": "Словаччина"
+      },
+      {
+        "value": "CZE",
+        "label": "Чехія"
+      },
+      {
+        "value": "ARM",
+        "label": "Вірменія"
+      },
+      {
+        "value": "USA",
+        "label": "Сполучені Штати"
+      },
+      {
+        "value": "GEO",
+        "label": "Грузія"
+      },
+      {
+        "value": "ESP",
+        "label": "Іспанія"
+      },
+      {
+        "value": "PRT",
+        "label": "Португалія"
+      },
+      {
+        "value": "EST",
+        "label": "Естонія"
+      },
+      {
+        "value": "DEU",
+        "label": "Німеччина"
+      },
+      {
+        "value": "MDA",
+        "label": "Молдова"
+      },
+      {
+        "value": "BGR",
+        "label": "Болгарія"
+      },
+      {
+        "value": "CAN",
+        "label": "Канада"
+      },
+      {
+        "value": "LTU",
+        "label": "Литва"
+      },
+      {
+        "value": "LVA",
+        "label": "Латвія"
+      },
+      {
+        "value": "MNE",
+        "label": "Чорногорія"
+      },
+      {
+        "value": "GBR",
+        "label": "Велика Британія"
+      },
+      {
+        "value": "AZE",
+        "label": "Азербайджан"
+      },
+      {
+        "value": "HRV",
+        "label": "Хорватія"
+      },
+      {
+        "value": "UZB",
+        "label": "Узбекистан"
+      },
+      {
+        "value": "SRB",
+        "label": "Сербія"
+      },
+      {
+        "value": "KAZ",
+        "label": "Казахстан"
+      },
+      {
+        "value": "AUT",
+        "label": "Австрія"
+      },
+      {
+        "value": "IRL",
+        "label": "Ірландія"
+      },
+      {
+        "value": "KGZ",
+        "label": "Киргизстан"
+      },
+      {
+        "value": "ISR",
+        "label": "Ізраїль"
+      },
+      {
+        "value": "SWE",
+        "label": "Швеція"
+      },
+      {
+        "value": "HUN",
+        "label": "Угорщина"
+      },
+      {
+        "value": "ARE",
+        "label": "Обʼєднані Арабські Емірати"
+      },
+      {
+        "value": "FRA",
+        "label": "Франція"
+      },
+      {
+        "value": "MLT",
+        "label": "Мальта"
+      },
+      {
+        "value": "NLD",
+        "label": "Нідерланди"
+      },
+      {
+        "value": "ARG",
+        "label": "Аргентина"
+      },
+      {
+        "value": "BRA",
+        "label": "Бразилія"
+      },
+      {
+        "value": "FIN",
+        "label": "Фінляндія"
+      },
+      {
+        "value": "ALB",
+        "label": "Албанія"
+      },
+      {
+        "value": "IND",
+        "label": "Індія"
+      },
+      {
+        "value": "BEL",
+        "label": "Бельгія"
+      },
+      {
+        "value": "NOR",
+        "label": "Норвегія"
+      },
+      {
+        "value": "ZAF",
+        "label": "Південно-Африканська Республіка"
+      },
+      {
+        "value": "THA",
+        "label": "Таїланд"
+      },
+      {
+        "value": "AUS",
+        "label": "Австралія"
+      },
+      {
+        "value": "CHN",
+        "label": "Китай"
+      },
+      {
+        "value": "SAU",
+        "label": "Саудівська Аравія"
+      },
+      {
+        "value": "NGA",
+        "label": "Нігерія"
+      },
+      {
+        "value": "MEX",
+        "label": "Мексика"
+      },
+      {
+        "value": "AND",
+        "label": "Андорра"
+      },
+      {
+        "value": "BIH",
+        "label": "Боснія і Герцеговина"
+      },
+      {
+        "value": "DNK",
+        "label": "Данія"
+      },
+      {
+        "value": "GRC",
+        "label": "Греція"
+      },
+      {
+        "value": "ISL",
+        "label": "Ісландія"
+      },
+      {
+        "value": "ITA",
+        "label": "Італія"
+      },
+      {
+        "value": "LIE",
+        "label": "Ліхтенштейн"
+      },
+      {
+        "value": "LUX",
+        "label": "Люксембург"
+      },
+      {
+        "value": "MCO",
+        "label": "Монако"
+      },
+      {
+        "value": "MKD",
+        "label": "Північна Македонія"
+      },
+      {
+        "value": "SMR",
+        "label": "Сан-Марино"
+      },
+      {
+        "value": "SVN",
+        "label": "Словенія"
+      },
+      {
+        "value": "CHE",
+        "label": "Швейцарія"
+      },
+      {
+        "value": "TUR",
+        "label": "Туреччина"
+      },
+      {
+        "value": "URY",
+        "label": "Уругвай"
+      },
+      {
+        "value": "PHL",
+        "label": "Філіппіни"
+      },
+      {
+        "value": "VNM",
+        "label": "Вʼєтнам"
+      }
+    ]
+  }
+}
