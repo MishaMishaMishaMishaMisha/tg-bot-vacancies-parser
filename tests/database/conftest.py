@@ -6,8 +6,6 @@ import pytest
 import pytest_asyncio
 from sqlalchemy import select
  
-from src.db.db_connection import async_engine, async_session_factory
-from src.db.models import Base
 from src.db.repositories import (
     NotificationRepository,
     SubscriptionRepository,
@@ -15,28 +13,6 @@ from src.db.repositories import (
     VacancyRepository,
 )
 
-
-# создание и очистка таблиц в бд
-@pytest_asyncio.fixture(scope="session", autouse=True)
-async def create_and_drop_tables():
-    
-    async with async_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    yield
-
-    async with async_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        
-
-# бд сессия
-@pytest_asyncio.fixture
-async def db_session():
-    async with async_session_factory() as session:
-        yield session
-        
-
-#############
 
 
 # Изоляция тестов: репозитории не делают commit, а db_session при выходе закрывает сессию,
