@@ -189,6 +189,9 @@ class DouSource(JobSource):
         response = await self._get(LISTING_URL)
         return DouFiltersParser.parse(response.text)
 
+    async def validate_query(self, query: SearchQuery) -> None:
+        self.build_params(query)
+
     async def _places(self) -> frozenset[str]:
         """Города + пометки: нужны, чтобы отделить компанию от локаций в заголовке.
 

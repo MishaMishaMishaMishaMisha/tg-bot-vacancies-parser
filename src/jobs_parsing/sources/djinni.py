@@ -255,6 +255,9 @@ class DjinniSource(JobSource):
             experiences=[item["value"] for item in groups["exp_level"]],
             groups=groups,
         )
+        
+    async def validate_query(self, query: SearchQuery) -> None:
+        await self._params_for(query)
 
     async def _fetch_categories(self) -> list[str]:
         """Категорий (primary_keyword) нет в форме: берём из шапки RSS.

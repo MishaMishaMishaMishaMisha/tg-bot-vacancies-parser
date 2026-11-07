@@ -59,6 +59,10 @@ class JobSource(ABC):
     @abstractmethod
     async def fetch_filter_options(self) -> FilterOptions:
         """Скачать с сайта доступные значения фильтров."""
+        
+    @abstractmethod
+    async def validate_query(self, query: SearchQuery) -> None:
+        """Бросает UnsupportedQuery (или ValueError), если сайт не умеет искать по такому запросу."""
 
     # ---- общая логика ----------------------------------------------------------
 

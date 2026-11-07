@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import uuid
 
+from datetime import datetime
+
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
@@ -11,6 +13,7 @@ from sqlalchemy import (
     Text,
     text,
     true,
+    DateTime
 )
 from sqlalchemy import UUID as SQLAlchemy_UUID
 from sqlalchemy.dialects.postgresql import ARRAY
@@ -93,6 +96,8 @@ class SubscriptionModel(TimestampMixin, Base):
     exclude_keywords: Mapped[list[str]] = mapped_column(ARRAY(Text), 
                                                         nullable=False, 
                                                         server_default=_EMPTY_ARRAY)
+    
+    seeded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
  
 
     user: Mapped["UserModel"] = relationship(back_populates="subscriptions", 
