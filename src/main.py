@@ -1,17 +1,34 @@
 import asyncio
+import logging
 
-from src.tg_bot_interface.run import run_bot
+from src.core.config import settings
+from src.db.db_connection import async_engine
+from src.services import ServiceContainer, ServiceSettings
+from src.tg_bot_interface.bot import create_bot, create_dispatcher
+from src.tg_bot_interface.telegram_notifier import TelegramNotifier
+
+
+def get_bot_token() -> str:
+    return settings.tg.API_TOKEN
+
+async def main() -> None:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+
+    bot = create_bot(get_bot_token())
+    container = ServiceContainer(
+        notifier=TelegramNotifier(bot),
+        settings=ServiceSettings(),   # при необходимости: ServiceSettings(poll_interval_seconds=300, ...)
+    )
+    dispatcher = create_dispatcher(container)
+
+    await container.start()           # фоновый опрос сайтов и отправка уведомлений
+    try:
+        await dispatcher.start_polling(bot, allowed_updates=dispatcher.resolve_used_update_types())
+    finally:
+        await container.stop()
+        await bot.session.close()
+        await async_engine.dispose()
 
 
 if __name__ == "__main__":
-    print("<main-file>")
-    
-    try:
-        asyncio.run(run_bot())
-        
-    except KeyboardInterrupt:
-        print("exit")
-        
-        
-# launch command
-# watchfiles "uv run python -m src.main"
+    asyncio.run(main())

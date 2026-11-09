@@ -12,7 +12,9 @@ from aiogram.exceptions import (
 from aiogram.types import LinkPreviewOptions
 
 from src.services.jobs import Vacancy
-from src.services.notifier import NotifierError, RetryAfterError, UserBlockedError, format_vacancy
+from src.services.notifier import NotifierError, RetryAfterError, UserBlockedError
+
+from .messages import format_vacancy_message
 
 # Эти ошибки BadRequest означают, что написать пользователю невозможно (удалил чат, аккаунт и т.п.)
 _DEAD_CHAT_MARKERS = ("chat not found", "user is deactivated", "bot was blocked", "peer_id_invalid")
@@ -26,7 +28,7 @@ class TelegramNotifier:
         try:
             await self._bot.send_message(
                 chat_id=telegram_id,
-                text=format_vacancy(vacancy),
+                text=format_vacancy_message(vacancy),
                 parse_mode=ParseMode.HTML,
                 link_preview_options=LinkPreviewOptions(is_disabled=True),
             )

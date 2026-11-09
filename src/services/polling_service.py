@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from typing import Mapping
 from uuid import UUID
@@ -152,13 +152,21 @@ class PollingService:
             source = self._sources[name]
             for query in queries:   # внутри сайта по очереди: источник сам выдерживает паузы между запросами
                 try:
-                    fetched[(name, query)] = await source.fetch(query)
+                    items = await source.fetch(query)
+                    fetched[(name, query)] = [self._with_category(v, query) for v in items]
                 except Exception as exc:   # сбой одного запроса не должен ронять весь цикл
                     failed.add((name, query))
                     log.warning("Запрос не выполнен: %s %s: %s", name, query, exc)
 
         await asyncio.gather(*(fetch_source(name, queries) for name, queries in by_source.items()))
         return fetched, failed
+
+    @staticmethod
+    def _with_category(vacancy: Vacancy, query: SearchQuery) -> Vacancy:
+        """DOU не отдаёт категорию в RSS: берём ту, по которой вакансию нашли."""
+        if vacancy.category is None and query.category:
+            return replace(vacancy, category=query.category)
+        return vacancy
 
     async def _save_and_match(
         self,

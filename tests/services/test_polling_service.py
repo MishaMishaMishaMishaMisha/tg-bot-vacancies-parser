@@ -2,6 +2,7 @@ import pytest
 
 from src.db.models import NotificationStatus
 
+
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
 PENDING = NotificationStatus.PENDING
@@ -156,3 +157,15 @@ async def test_failed_request_does_not_break_cycle_and_postpones_seeding(
     assert recovered_cycle.subscriptions_seeded == 1
     assert await db_notifications(PENDING) == []   # старая вакансия не превратилась в «новую»
     assert (await subscription_service.get(1, subscription.id)).is_seeded is True
+
+
+async def test_vacancy_without_category_gets_the_category_it_was_found_by(
+    polling_service, delivery_service, subscribe, dou_source, make_vacancy, notifier
+):
+    await subscribe(1)
+    dou_source.add("Python", make_vacancy("dou", category=None))   # как у DOU: в RSS категории нет
+
+    await polling_service.run_cycle()
+    await delivery_service.deliver_pending()
+
+    assert [vacancy.category for _, vacancy in notifier.sent] == ["Python"]
