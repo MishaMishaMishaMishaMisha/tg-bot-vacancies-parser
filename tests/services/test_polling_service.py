@@ -17,7 +17,6 @@ async def test_cycle_without_subscriptions_does_nothing(polling_service, dou_sou
     assert dou_source.fetch_calls == [] and djinni_source.fetch_calls == []
 
 
-# ------------------------------------------------------------------ запросы к сайтам
 
 async def test_same_filters_of_several_users_make_one_request_per_site(
     polling_service, subscribe, dou_source, djinni_source
@@ -45,7 +44,6 @@ async def test_different_filters_make_different_requests(polling_service, subscr
     assert sorted(q.category for q in dou_source.fetch_calls) == ["Java", "Python"]
 
 
-# ------------------------------------------------------------------ новые вакансии и уведомления
 
 async def test_new_vacancy_creates_pending_notifications_for_matching_users(
     polling_service, subscribe, dou_source, make_vacancy, db_notifications
@@ -121,7 +119,6 @@ async def test_paused_subscriptions_and_deactivated_users_are_ignored(
     assert await db_notifications() == []
 
 
-# ------------------------------------------------------------------ засев
 
 async def test_seeding_marks_current_vacancies_as_skipped_not_pending(
     subscribe, dou_source, make_vacancy, db_notifications

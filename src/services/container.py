@@ -19,7 +19,7 @@ from .notifier import Notifier
 from .polling_service import PollingService
 from .query_builder import SubscriptionQueryBuilder
 from .scheduler import PollingScheduler
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 from .subscription_service import SubscriptionService
 from .unit_of_work import UnitOfWork, UowFactory
 from .user_service import UserService
@@ -30,7 +30,7 @@ class ServiceContainer:
         self,
         notifier: Notifier,
         *,
-        settings: ServiceSettings | None = None,
+        settings: ServiceSettings | None = None, 
         uow_factory: UowFactory | None = None,
         source_names: Sequence[str] | None = None,
     ) -> None:

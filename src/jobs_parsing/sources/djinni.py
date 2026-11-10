@@ -1,14 +1,4 @@
-"""Источник djinni.co.
 
-Четыре класса с разными обязанностями:
-  DjinniFeedParser     RSS (байты) -> Vacancy. Лента свежая и стабильная, но без компании и меты.
-  DjinniListingParser  HTML страницы /jobs/ -> Vacancy. Полные данные карточки.
-  DjinniFiltersParser  HTML формы фильтров -> группы значений.
-  DjinniSource         сеть + перевод SearchQuery в параметры Djinni.
-
-Лента и HTML-список отдают вакансии в одном порядке (по времени обновления) и понимают
-одни и те же параметры фильтров, так что один и тот же запрос годится для обоих.
-"""
 from __future__ import annotations
 
 import logging
@@ -78,7 +68,6 @@ class DjinniFeedParser:
 
 
 class DjinniListingParser:
-    """Разбор карточек вакансий на странице https://djinni.co/jobs/ (15 штук на страницу)."""
 
     @classmethod
     def parse(cls, html: str, source: str = "djinni") -> list[Vacancy]:
@@ -138,15 +127,12 @@ class DjinniListingParser:
 
 
 class DjinniFiltersParser:
-    """Достаёт значения фильтров из формы на странице /jobs/."""
 
-    # Группы формы, нужные боту (имя параметра в URL).
-    # company_type, domain, editorial в форме тоже есть: добавьте сюда, если понадобятся.
     GROUPS = ("exp_level", "employment", "english_level", "region", "location", "country")
 
     @classmethod
     def parse_form(cls, html: str) -> dict[str, list[dict]]:
-        """{параметр: [{"value": ..., "label": ...}]}. Подписи на языке интерфейса сайта."""
+
         soup = BeautifulSoup(html, "lxml")
 
         def label_of(el):
@@ -182,8 +168,7 @@ class DjinniSource(JobSource):
     MIN_CATEGORIES = 100   # меньше считаем сбоем: в шапке ленты их около 170
     MAX_SALARY = 10_000    # предел ползунка зарплаты на сайте, $
 
-    # Experience бота -> значения exp_level. У Djinni опыт по годам (no_exp, 1y … 10y),
-    # поэтому наши интервалы превращаются в несколько значений (границы пересекаются).
+
     _EXPERIENCE = {
         Experience.NONE: ["no_exp"],
         Experience.UP_TO_1: ["no_exp", "1y"],
@@ -193,7 +178,6 @@ class DjinniSource(JobSource):
     }
 
     def build_params(self, query: SearchQuery, options: FilterOptions) -> dict[str, str | list[str]]:
-        """SearchQuery -> параметры Djinni (значения-списки httpx превращает в повторы параметра)."""
         self._require_unset(query, "relocation")
 
         params: dict[str, str | list[str]] = {}
@@ -217,7 +201,7 @@ class DjinniSource(JobSource):
 
     @staticmethod
     def _resolve_city(city: str, options: FilterOptions) -> str:
-        """Название города («Київ») -> значение фильтра («kyiv») по списку фильтров сайта."""
+
         wanted = casefold_key(city)
         for item in options.groups.get("location", []):
             if wanted in (casefold_key(item["value"]), casefold_key(item.get("label") or "")):
@@ -231,13 +215,13 @@ class DjinniSource(JobSource):
         return self.build_params(query, options)
 
     async def fetch(self, query: SearchQuery | None = None) -> list[Vacancy]:
-        """Свежие вакансии из RSS: до 100 штук, но без компании и меты (опыт, английский...)."""
+
         params = await self._params_for(query)
         response = await self._get(RSS_URL, params=params)
         return DjinniFeedParser.parse(response.content, source=self.name)
 
     async def fetch_listing(self, query: SearchQuery | None = None, page: int = 1) -> list[Vacancy]:
-        """Вакансии из HTML-списка: по 15 на страницу, с компанией, городом и метками карточки."""
+
         params = {"search_type": "basic-search", **await self._params_for(query)}
         if page > 1:
             params["page"] = str(page)
@@ -260,10 +244,7 @@ class DjinniSource(JobSource):
         await self._params_for(query)
 
     async def _fetch_categories(self) -> list[str]:
-        """Категорий (primary_keyword) нет в форме: берём из шапки RSS.
 
-        Узкая лента весит ~40 КБ вместо ~500 КБ, а список категорий в шапке тот же.
-        """
         for params in ({"primary_keyword": "Python", "exp_level": "2y"}, None):
             response = await self._get(RSS_URL, params=params)
             categories = DjinniFeedParser.parse_categories(response.content)

@@ -1,4 +1,3 @@
-"""Всё, что не подошло другим обработчикам."""
 from __future__ import annotations
 
 from aiogram import F, Router

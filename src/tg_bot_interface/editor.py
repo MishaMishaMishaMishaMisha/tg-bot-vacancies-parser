@@ -1,4 +1,3 @@
-"""Редактор фильтров: кнопки. Текстовый ввод (поиск, зарплата, слова) находится в inputs.py."""
 from __future__ import annotations
 
 from uuid import UUID

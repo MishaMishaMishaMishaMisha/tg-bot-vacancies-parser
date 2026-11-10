@@ -14,7 +14,7 @@ class SubscriptionRepository(BaseRepository[SubscriptionModel]):
     model = SubscriptionModel
 
     async def get_for_user(self, subscription_id: UUID, user_id: UUID) -> SubscriptionModel | None:
-        """Подписка, только если она принадлежит этому пользователю (защита от чужих id в callback-ах)."""
+
         stmt = select(SubscriptionModel).where(
             SubscriptionModel.id == subscription_id, SubscriptionModel.user_id == user_id
         )
@@ -31,11 +31,7 @@ class SubscriptionRepository(BaseRepository[SubscriptionModel]):
         return await self.session.scalar(stmt) or 0
 
     async def list_active(self, source: str | None = None) -> Sequence[SubscriptionModel]:
-        """Все включённые подписки активных пользователей, сразу с пользователем (нужен telegram_id).
 
-        Это основа цикла опроса: из подписок строятся уникальные запросы к сайтам.
-        `source` оставляет только подписки, которые отслеживают этот сайт.
-        """
         stmt = (
             select(SubscriptionModel)
             .join(SubscriptionModel.user)

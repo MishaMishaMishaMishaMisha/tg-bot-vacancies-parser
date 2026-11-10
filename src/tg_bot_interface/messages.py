@@ -1,4 +1,3 @@
-"""Текст сообщения с вакансией для Telegram."""
 from __future__ import annotations
 
 import re

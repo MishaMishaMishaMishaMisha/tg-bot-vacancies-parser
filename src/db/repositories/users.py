@@ -19,7 +19,6 @@ class UserRepository(BaseRepository[UserModel]):
         return await self.session.scalar(stmt)
 
     async def get_with_subscriptions(self, user_id: UUID) -> UserModel | None:
-        """Пользователь вместе с подписками (в async-коде их нельзя подгрузить «лениво»)."""
         stmt = (
             select(UserModel)
             .where(UserModel.id == user_id)
@@ -36,10 +35,7 @@ class UserRepository(BaseRepository[UserModel]):
         first_name: str | None = None,
         language_code: str | None = None,
     ) -> UserModel:
-        """Создать пользователя или обновить его данные из Telegram (например, при /start).
 
-        Заодно снова делает пользователя активным: если он написал боту, значит, не заблокировал его.
-        """
         insert_stmt = pg_insert(UserModel).values(
             telegram_id=telegram_id,
             username=username,
@@ -53,7 +49,7 @@ class UserRepository(BaseRepository[UserModel]):
                 "first_name": insert_stmt.excluded.first_name,
                 "language_code": insert_stmt.excluded.language_code,
                 "is_active": True,
-                "updated_at": func.now(),  # при ON CONFLICT Python-овый onupdate не срабатывает
+                "updated_at": func.now(), 
             },
         ).returning(UserModel)
         result = await self.session.scalars(stmt, execution_options={"populate_existing": True})
@@ -65,7 +61,7 @@ class UserRepository(BaseRepository[UserModel]):
         return result.rowcount > 0
 
     async def set_active_by_telegram_id(self, telegram_id: int, is_active: bool) -> bool:
-        """Например, выключить пользователя, который заблокировал бота."""
+        """выключить пользователя, который заблокировал бота."""
         stmt = update(UserModel).where(UserModel.telegram_id == telegram_id).values(is_active=is_active)
         result = await self.session.execute(stmt)
         return result.rowcount > 0

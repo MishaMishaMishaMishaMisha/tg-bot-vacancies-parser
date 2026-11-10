@@ -22,7 +22,7 @@ from .schemas import (
     SubscriptionInfo,
     UserInfo,
 )
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 from .subscription_service import SubscriptionService
 from .unit_of_work import UnitOfWork
 from .user_service import UserService

@@ -37,7 +37,6 @@ async def registered(user_service):
     return await user_service.register(USER, username="tester")
 
 
-# ------------------------------------------------------------------ create
 
 async def test_create_normalizes_filters_and_seeds_subscription(subscription_service, registered):
     filters = SubscriptionFilters(
@@ -91,7 +90,6 @@ async def test_create_enforces_subscription_limit(subscription_service, register
         await subscription_service.create(USER, filters)
 
 
-# ------------------------------------------------------------------ update
 
 async def test_update_replaces_filters_and_reseeds(subscription_service, registered, dou_source):
     created = (await subscription_service.create(
@@ -126,7 +124,6 @@ async def test_update_unknown_or_foreign_subscription_raises(subscription_servic
         await subscription_service.update(2000, own.id, filters)   # чужая подписка
 
 
-# ------------------------------------------------------------------ пауза, удаление, чтение
 
 async def test_set_active_pauses_and_resumes_with_reseeding(subscription_service, registered, dou_source):
     created = (await subscription_service.create(

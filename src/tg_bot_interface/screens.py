@@ -1,4 +1,3 @@
-"""Экраны бота: пара (текст, клавиатура). Чистые функции: данные приходят аргументами."""
 from __future__ import annotations
 
 import math
@@ -42,7 +41,6 @@ def format_filters(filters: SubscriptionFilters, english_labels: dict[str, str] 
     return "\n".join(lines)
 
 
-# ------------------------------------------------------------------ главное меню и «Мои фильтры»
 
 def main_menu_screen(subscription: SubscriptionInfo | None) -> tuple[str, InlineKeyboardMarkup]:
     if subscription is None:
@@ -66,7 +64,6 @@ def my_filters_screen(
     return "\n".join(parts), keyboards.my_filters(subscription.is_active)
 
 
-# ------------------------------------------------------------------ редактор
 
 def editor_screen(
     filters: SubscriptionFilters, english_labels: dict[str, str] | None = None

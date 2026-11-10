@@ -1,4 +1,3 @@
-"""Общие помощники обработчиков."""
 from __future__ import annotations
 
 from aiogram import Bot

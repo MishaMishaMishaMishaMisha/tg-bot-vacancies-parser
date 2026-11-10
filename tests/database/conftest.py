@@ -14,10 +14,6 @@ from src.db.repositories import (
 )
 
 
-
-# Изоляция тестов: репозитории не делают commit, а db_session при выходе закрывает сессию,
-# то есть откатывает транзакцию. Поэтому данные одного теста не видны другому и отдельная
-# очистка таблиц не нужна. Главное: в тестах не вызывать db_session.commit().
  
 _counter = itertools.count(1)
  
@@ -48,7 +44,7 @@ def notification_repo(db_session) -> NotificationRepository:
     return NotificationRepository(db_session)
  
  
-# ---- чтение «как есть» из БД (в обход объектов в памяти сессии)
+# ---- чтение
 @pytest.fixture
 def db_value(db_session):
     """await db_value(UserModel.username, UserModel.id == user.id)"""
@@ -59,7 +55,7 @@ def db_value(db_session):
     return _get
  
  
-# ---- фабрики сущностей: каждая принимает overrides и создаёт запись через репозиторий
+# ---- фабрики сущностей
 @pytest_asyncio.fixture
 async def create_user(user_repo):
     async def _create(**overrides):
@@ -128,14 +124,9 @@ async def other_user(create_user):
     return await create_user()
  
  
-# ---- «доменная» вакансия для VacancyRepository.upsert_many
+# ---- доменная вакансия для VacancyRepository.upsert_many
 @dataclass(frozen=True)
 class DomainVacancyStub:
-    """Те же поля, что у вакансии, которую возвращают парсеры сайтов.
- 
-    upsert_many читает только эти атрибуты, поэтому тестам не нужен настоящий класс.
-    Если хотите, замените заглушку импортом вашего доменного Vacancy.
-    """
  
     source: str
     id: str

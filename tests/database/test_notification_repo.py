@@ -10,7 +10,6 @@ from src.db.repositories import NewNotification
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
 
-# ------------------------------------------------------------------ создание
 
 async def test_add_many_if_absent_creates_pending_notifications(
     notification_repo, user, other_user, create_vacancy
@@ -65,7 +64,6 @@ async def test_get_notified_vacancy_ids_is_per_user(
     assert await notification_repo.get_notified_vacancy_ids(user.id, []) == set()
 
 
-# ------------------------------------------------------------------ очередь отправки
 
 async def test_list_pending_returns_pending_with_user_and_vacancy_loaded(
     notification_repo, user, create_vacancy, create_notification
@@ -147,7 +145,6 @@ async def test_skip_pending_for_user_touches_only_that_users_pending(
     assert await status_of(others) == NotificationStatus.PENDING
 
 
-# ------------------------------------------------------------------ статистика и очистка
 
 async def test_count_by_status(notification_repo, user, create_vacancy, create_notification):
     await create_notification(user, await create_vacancy())

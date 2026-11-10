@@ -22,8 +22,7 @@ if TYPE_CHECKING:
  
 class UserModel(TimestampMixin, Base):
     __tablename__ = "users"
- 
-    #id: Mapped[int] = mapped_column(primary_key=True)
+
     id: Mapped[uuid.UUID] = mapped_column(
                                 SQLAlchemy_UUID(as_uuid=True),
                                 primary_key=True,

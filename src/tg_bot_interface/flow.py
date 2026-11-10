@@ -1,4 +1,3 @@
-"""Шаги редактора фильтров, общие для обработчиков кнопок и текстового ввода."""
 from __future__ import annotations
 
 from aiogram.fsm.context import FSMContext

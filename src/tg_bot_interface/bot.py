@@ -23,11 +23,7 @@ async def _on_startup(bot: Bot) -> None:
 
 
 def create_dispatcher(container: ServiceContainer) -> Dispatcher:
-    """Сервисы доступны во всех обработчиках через параметр `container`.
 
-    MemoryStorage: черновики фильтров пропадают при перезапуске бота (пользователь увидит «Сесія застаріла»).
-    Для продакшена можно заменить на RedisStorage: черновик хранится обычным словарём.
-    """
     dispatcher = Dispatcher(storage=MemoryStorage(), container=container)
     dispatcher.include_router(router)
     dispatcher.startup.register(_on_startup)

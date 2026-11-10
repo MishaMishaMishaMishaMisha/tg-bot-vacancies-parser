@@ -29,12 +29,6 @@ class Base(DeclarativeBase):
  
  
 class TimestampMixin:
-    """created_at / updated_at.
- 
-    Значения ставит Python (utcnow), поэтому они сразу доступны в объекте и после
-    UPDATE (в async-коде обращение к «протухшему» атрибуту привело бы к ошибке).
-    server_default нужен для вставок в обход ORM (INSERT ... ON CONFLICT и т.п.).
-    """
  
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow, server_default=func.now(), nullable=False

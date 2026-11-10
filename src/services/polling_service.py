@@ -1,4 +1,3 @@
-"""Цикл опроса сайтов: подписки -> уникальные запросы -> вакансии -> новые уведомления."""
 from __future__ import annotations
 
 import asyncio
@@ -17,7 +16,7 @@ from .jobs import JobSource, SearchQuery, Vacancy
 from .matching import passes_local_filters
 from .query_builder import SubscriptionQueryBuilder
 from .schemas import CycleReport, SubscriptionFilters
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 from .unit_of_work import UnitOfWork, UowFactory
 
 log = logging.getLogger(__name__)
@@ -27,7 +26,6 @@ QueryKey = tuple[str, SearchQuery]   # (имя сайта, запрос)
 
 @dataclass(slots=True, eq=False)
 class ActiveSubscription:
-    """Снимок подписки на время цикла (с ORM-моделью нельзя работать после закрытия сессии)."""
 
     id: UUID
     user_id: UUID
@@ -62,7 +60,7 @@ class PollingService:
         self._builder = query_builder or SubscriptionQueryBuilder(self._settings.max_queries_per_subscription)
         self._cycle_lock = asyncio.Lock()
 
-    # ------------------------------------------------------------------ публичные методы
+
 
     async def run_cycle(self) -> CycleReport:
         """Один полный проход по всем подписчикам. Два цикла одновременно не выполняются."""
@@ -77,7 +75,7 @@ class PollingService:
         """
         return await self._run(only={subscription_id})
 
-    # ------------------------------------------------------------------ реализация
+   
 
     async def _run(self, only: set[UUID] | None) -> CycleReport:
         started = time.monotonic()

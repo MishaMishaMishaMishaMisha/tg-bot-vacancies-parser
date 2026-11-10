@@ -1,4 +1,3 @@
-"""Построители клавиатур. Чистые функции без обращения к сервисам."""
 from __future__ import annotations
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -28,7 +27,6 @@ def _field_label(field: str, count: int = 0) -> str:
     return f"{emoji} {title}" + (f" ({count})" if count else "")
 
 
-# ------------------------------------------------------------------ меню
 
 def main_menu(has_filters: bool, is_active: bool = True) -> InlineKeyboardMarkup:
     if not has_filters:
@@ -59,7 +57,6 @@ def save_failed() -> InlineKeyboardMarkup:
     return _markup([[_btn(texts.BTN_BACK_TO_FILTERS, a="screen", f="editor")], [_btn(texts.BTN_MENU, a="menu")]])
 
 
-# ------------------------------------------------------------------ редактор фильтров
 
 def editor(filters: SubscriptionFilters) -> InlineKeyboardMarkup:
     def open_screen(field: str, count: int = 0) -> InlineKeyboardButton:

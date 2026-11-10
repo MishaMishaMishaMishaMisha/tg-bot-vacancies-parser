@@ -1,11 +1,3 @@
-"""Unit of Work: одна сессия БД, все репозитории на ней и явный commit.
-
-    async with UnitOfWork() as uow:
-        user = await uow.users.get_by_telegram_id(123)
-        await uow.commit()
-
-Если внутри блока было исключение или commit не вызывали, изменения откатываются.
-"""
 from __future__ import annotations
 
 from typing import Callable

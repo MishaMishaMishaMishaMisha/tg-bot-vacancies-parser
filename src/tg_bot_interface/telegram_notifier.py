@@ -1,4 +1,3 @@
-"""Реализация Notifier для aiogram 3: отправляет вакансию сообщением в чат пользователя."""
 from __future__ import annotations
 
 from aiogram import Bot

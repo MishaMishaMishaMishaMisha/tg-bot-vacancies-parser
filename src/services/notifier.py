@@ -1,8 +1,3 @@
-"""Интерфейс отправки уведомлений и форматирование сообщения.
-
-Сервисы не знают про Telegram: они вызывают Notifier. Реализация для aiogram лежит в
-src/tg_bot_interface/telegram_notifier.py.
-"""
 from __future__ import annotations
 
 import html

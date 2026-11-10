@@ -1,4 +1,3 @@
-"""Фоновый запуск: опрос сайтов, отправка уведомлений и периодическое обновление фильтров."""
 from __future__ import annotations
 
 import asyncio
@@ -9,7 +8,7 @@ from .filter_catalog_service import FilterCatalogService
 from .notification_service import NotificationService
 from .polling_service import PollingService
 from .schemas import CycleReport, DeliveryReport
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 
 log = logging.getLogger(__name__)
 

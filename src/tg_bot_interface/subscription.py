@@ -1,4 +1,3 @@
-"""Мои фильтры, пауза и возобновление уведомлений, удаление фильтров."""
 from __future__ import annotations
 
 from aiogram import F, Router

@@ -1,9 +1,9 @@
 import asyncio
 import logging
 
-from src.core.config import settings
+from src.core.config import settings, ServiceSettings
 from src.db.db_connection import async_engine
-from src.services import ServiceContainer, ServiceSettings
+from src.services import ServiceContainer
 from src.tg_bot_interface.bot import create_bot, create_dispatcher
 from src.tg_bot_interface.telegram_notifier import TelegramNotifier
 
@@ -17,7 +17,7 @@ async def main() -> None:
     bot = create_bot(get_bot_token())
     container = ServiceContainer(
         notifier=TelegramNotifier(bot),
-        settings=ServiceSettings(),   # при необходимости: ServiceSettings(poll_interval_seconds=300, ...)
+        settings=ServiceSettings(),
     )
     dispatcher = create_dispatcher(container)
 

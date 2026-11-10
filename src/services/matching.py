@@ -1,4 +1,3 @@
-"""Локальные фильтры: проверка вакансии по ключевым словам уже после получения с сайта."""
 from __future__ import annotations
 
 from typing import Sequence

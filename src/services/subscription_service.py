@@ -14,7 +14,7 @@ from .exceptions import (
 from .jobs import Employment, Experience, JobSource, Region
 from .query_builder import SubscriptionQueryBuilder
 from .schemas import CreateSubscriptionResult, QueryWarning, SubscriptionFilters, SubscriptionInfo
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 from .unit_of_work import UnitOfWork, UowFactory
 
 log = logging.getLogger(__name__)

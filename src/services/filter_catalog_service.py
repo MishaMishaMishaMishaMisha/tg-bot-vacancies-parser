@@ -6,7 +6,7 @@ from typing import Mapping, Sequence
 
 from .jobs import Employment, Experience, FilterOptions, JobSource, Region
 from .schemas import FilterCatalog, FilterChoice
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 
 log = logging.getLogger(__name__)
 

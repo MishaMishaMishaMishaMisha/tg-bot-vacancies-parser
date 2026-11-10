@@ -22,7 +22,6 @@ class BaseRepository(Generic[ModelT]):
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
 
-    # ---- чтение ----------------------------------------------------------------
 
     async def get(self, id_: UUID) -> ModelT | None:
         return await self.session.get(self.model, id_)
@@ -52,7 +51,6 @@ class BaseRepository(Generic[ModelT]):
         stmt = select(self.model.id).where(self.model.id == id_).limit(1)  # type: ignore[attr-defined]
         return (await self.session.scalar(stmt)) is not None
 
-    # ---- запись ----------------------------------------------------------------
 
     async def add(self, obj: ModelT) -> ModelT:
         self.session.add(obj)

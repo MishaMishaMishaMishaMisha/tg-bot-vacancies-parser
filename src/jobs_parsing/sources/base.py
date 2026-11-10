@@ -39,8 +39,7 @@ class JobSource(ABC):
         client: httpx.AsyncClient | None = None,
         cache_dir: str | Path = "cache",
     ) -> None:
-        # Свой клиент создаём сами и сами закрываем; переданный снаружи не трогаем
-        # (в этом случае заголовки/таймауты задаёт вызывающий код).
+
         self._owns_client = client is None
         self.client = client if client is not None else httpx.AsyncClient(
             headers=DEFAULT_HEADERS, timeout=20, follow_redirects=True
@@ -50,7 +49,6 @@ class JobSource(ABC):
         self._last_request = 0.0
         self._options: FilterOptions | None = None
 
-    # ---- что должен реализовать каждый источник --------------------------------
 
     @abstractmethod
     async def fetch(self, query: SearchQuery | None = None) -> list[Vacancy]:
@@ -64,7 +62,9 @@ class JobSource(ABC):
     async def validate_query(self, query: SearchQuery) -> None:
         """Бросает UnsupportedQuery (или ValueError), если сайт не умеет искать по такому запросу."""
 
-    # ---- общая логика ----------------------------------------------------------
+    
+    
+    
 
     async def get_filter_options(self, refresh: bool = False) -> FilterOptions:
         """Фильтры с кэшем: память -> файл cache/<name>_filters.json -> сайт."""
@@ -118,7 +118,9 @@ class JobSource(ABC):
         await self.aclose()
 
 
-# ---- реестр источников ---------------------------------------------------------
+
+
+#реестр источников 
 
 _REGISTRY: dict[str, type[JobSource]] = {}
 

@@ -19,7 +19,6 @@ from sqlalchemy import UUID as SQLAlchemy_UUID
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
  
-#from ..models import Vacancy as DomainVacancy
 from src.jobs_parsing.models import Vacancy as DomainVacancy
 from .base import Base, utcnow, _EMPTY_ARRAY
 
@@ -35,7 +34,6 @@ class VacancyModel(Base):
         Index("ix_vacancies_source_active_last_seen", "source", "is_active", "last_seen_at"),
     )
  
-    #id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     id: Mapped[uuid.UUID] = mapped_column(
                                 SQLAlchemy_UUID(as_uuid=True),
                                 primary_key=True,

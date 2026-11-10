@@ -10,7 +10,6 @@ from src.db.models import NotificationModel, VacancyModel
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
 
-# ------------------------------------------------------------------ чтение
 
 async def test_get_by_external_id(vacancy_repo, create_vacancy):
     vacancy = await create_vacancy(source="dou", external_id="777")
@@ -65,7 +64,6 @@ async def test_count_by_source(vacancy_repo, create_vacancy):
     assert await vacancy_repo.count_by_source(only_active=False) == {"dou": 3, "djinni": 1}
 
 
-# ------------------------------------------------------------------ upsert_many
 
 async def test_upsert_many_inserts_new_vacancies(vacancy_repo, make_domain_vacancy, db_value):
     first = make_domain_vacancy(title="Backend", company="ACME", locations=("Київ", "віддалено"), tags=("Python",))
@@ -81,7 +79,7 @@ async def test_upsert_many_inserts_new_vacancies(vacancy_repo, make_domain_vacan
     assert (saved.title, saved.company, saved.locations, saved.tags) == (
         "Backend", "ACME", ["Київ", "віддалено"], ["Python"]
     )
-    assert saved.description == first.text           # поле text доменной вакансии -> description
+    assert saved.description == first.text  # поле text доменной вакансии -> description
     assert saved.is_active is True
 
 
@@ -95,7 +93,7 @@ async def test_upsert_many_separates_new_from_existing_and_keeps_fields(vacancy_
 
     assert [v.external_id for v in result.new] == [brand_new.id]
     assert [v.external_id for v in result.existing] == [known.id]
-    assert result.existing[0].title == "Original title"   # поля существующей вакансии не перезаписываются
+    assert result.existing[0].title == "Original title" # поля существующей вакансии не перезаписываются
     assert await vacancy_repo.count() == 2
 
 
@@ -130,7 +128,6 @@ async def test_upsert_many_collapses_duplicates_and_handles_empty_input(vacancy_
     assert empty.new == [] and empty.existing == []
 
 
-# ------------------------------------------------------------------ закрытие и очистка
 
 async def test_mark_inactive(vacancy_repo, create_vacancy, db_value):
     v1 = await create_vacancy()

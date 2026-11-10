@@ -14,7 +14,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: watchfiles "uv run python -m src.main"
+    command: watchfiles --filter python "uv run python -m src.main" src
     # command: >
       # sh -c "uv run alembic upgrade head &&
       #        uv run python -m src.main"

@@ -1,8 +1,3 @@
-"""Объекты, которыми сервисы обмениваются с ботом.
-
-Сервисы возвращают эти dataclass, а не ORM-модели: после закрытия сессии с моделями
-в async-коде нельзя безопасно работать (DetachedInstanceError / MissingGreenlet).
-"""
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
@@ -16,7 +11,6 @@ if TYPE_CHECKING:
     from src.db.models import SubscriptionModel, UserModel
 
 
-# ------------------------------------------------------------------ пользователи
 
 @dataclass(slots=True)
 class UserInfo:
@@ -41,21 +35,10 @@ class UserInfo:
         )
 
 
-# ------------------------------------------------------------------ подписки
 
 @dataclass(slots=True)
 class SubscriptionFilters:
-    """Фильтры подписки в терминах бота. Пустой список означает «любое значение».
 
-    sources           сайты: "dou", "djinni"
-    experiences       значения Experience: "none", "0-1", "1-3", "3-5", "5plus"
-    employments       значения Employment: "remote", "parttime", "office"
-    regions           значения Region: "worldwide", "UKR", "eu", "other"
-    english_levels    значения сайта (см. FilterCatalog.english_levels), только Djinni
-    categories/cities названия как в FilterCatalog
-    keywords          в вакансии должно встретиться хотя бы одно из слов
-    exclude_keywords  вакансия с любым из этих слов не отправляется
-    """
 
     sources: list[str] = field(default_factory=list)
     categories: list[str] = field(default_factory=list)
@@ -115,11 +98,6 @@ class SubscriptionInfo:
 
 @dataclass(slots=True)
 class QueryWarning:
-    """Что не удалось учесть при построении запросов к сайту.
-
-    code: categories_unavailable | cities_unavailable | experiences_invalid |
-          employments_invalid | regions_invalid | unsupported_filter | source_skipped | unknown_source
-    """
 
     source: str
     code: str
@@ -132,10 +110,9 @@ class QueryWarning:
 @dataclass(slots=True)
 class CreateSubscriptionResult:
     subscription: SubscriptionInfo
-    warnings: list[QueryWarning] = field(default_factory=list)   # бот может показать их пользователю
+    warnings: list[QueryWarning] = field(default_factory=list)  
 
 
-# ------------------------------------------------------------------ каталог фильтров для кнопок бота
 
 @dataclass(slots=True)
 class FilterChoice:
@@ -154,7 +131,6 @@ class FilterCatalog:
     max_salary: int
 
 
-# ------------------------------------------------------------------ отчёты о работе
 
 @dataclass(slots=True)
 class CycleReport:

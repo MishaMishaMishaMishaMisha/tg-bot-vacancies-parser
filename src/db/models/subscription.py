@@ -28,12 +28,6 @@ if TYPE_CHECKING:
 
  
 class SubscriptionModel(TimestampMixin, Base):
-    """Набор фильтров пользователя.
- 
-    Пустой массив фильтра означает «любое значение». Только `sources` обязателен.
-    Значения хранятся в терминах бота (см. jobbot.models.SearchQuery и перечисления),
-    а перевод в параметры конкретного сайта делают источники.
-    """
  
     __tablename__ = "subscriptions"
     __table_args__ = (
@@ -41,7 +35,6 @@ class SubscriptionModel(TimestampMixin, Base):
         CheckConstraint("min_salary IS NULL OR min_salary >= 0", name="min_salary_non_negative"),
     )
  
-    #id: Mapped[int] = mapped_column(primary_key=True)
     id: Mapped[uuid.UUID] = mapped_column(
                                 SQLAlchemy_UUID(as_uuid=True),
                                 primary_key=True,

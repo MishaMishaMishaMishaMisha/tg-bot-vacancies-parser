@@ -9,7 +9,7 @@ from uuid import UUID
 from .jobs import Vacancy
 from .notifier import Notifier, NotifierError, RetryAfterError, UserBlockedError
 from .schemas import DeliveryReport
-from .settings import ServiceSettings
+from src.core.config import ServiceSettings
 from .unit_of_work import UnitOfWork, UowFactory
 
 log = logging.getLogger(__name__)
@@ -60,7 +60,6 @@ class NotificationService:
                     await asyncio.sleep(self._settings.send_interval_seconds)
             return report
 
-    # ------------------------------------------------------------------ реализация
 
     async def _load_batch(self, report: DeliveryReport) -> tuple[list[_PendingItem], set[UUID]]:
         """Очередная порция. Уведомления неактивных пользователей снимаются с очереди, не отправляясь."""

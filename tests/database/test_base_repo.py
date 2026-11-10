@@ -1,4 +1,3 @@
-"""CRUD из BaseRepository. Проверяем на UserRepository: самая простая таблица."""
 from uuid import uuid4
  
 import pytest

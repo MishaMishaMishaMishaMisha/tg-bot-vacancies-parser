@@ -31,12 +31,7 @@ class NotificationRepository(BaseRepository[NotificationModel]):
         *,
         status: NotificationStatus = NotificationStatus.PENDING,
     ) -> list[NotificationModel]:
-        """Создаёт уведомления, которых ещё нет, и возвращает ТОЛЬКО созданные.
 
-        Пара (user_id, vacancy_id) уникальна, поэтому повторно вакансия пользователю не уйдёт,
-        даже если она подходит под несколько его подписок или попала в выдачу снова.
-        Со status=SKIPPED этим же методом «засевают» вакансии, уже существующие в момент создания подписки.
-        """
         unique = {(i.user_id, i.vacancy_id): i for i in items}
         created_ids: list[int] = []
         values = list(unique.values())
@@ -61,7 +56,7 @@ class NotificationRepository(BaseRepository[NotificationModel]):
         return list(await self.get_many(created_ids))
 
     async def get_notified_vacancy_ids(self, user_id: UUID, vacancy_ids: Iterable[UUID]) -> set[UUID]:
-        """Какие из этих вакансий пользователь уже получил (или они помечены как пропущенные)."""
+
         ids = list(vacancy_ids)
         if not ids:
             return set()
@@ -71,10 +66,7 @@ class NotificationRepository(BaseRepository[NotificationModel]):
         return set((await self.session.scalars(stmt)).all())
 
     async def list_pending(self, *, limit: int = 100, lock: bool = False) -> Sequence[NotificationModel]:
-        """Очередь на отправку: сразу с пользователем и вакансией.
 
-        lock=True берёт строки с FOR UPDATE SKIP LOCKED: так несколько воркеров не заберут одно и то же.
-        """
         stmt = (
             select(NotificationModel)
             .where(NotificationModel.status == NotificationStatus.PENDING)
@@ -113,7 +105,7 @@ class NotificationRepository(BaseRepository[NotificationModel]):
         return notification
 
     async def skip_pending_for_user(self, user_id: UUID) -> int:
-        """Снять с очереди всё неотправленное (например, пользователь заблокировал бота)."""
+
         stmt = (
             update(NotificationModel)
             .where(NotificationModel.user_id == user_id, NotificationModel.status == NotificationStatus.PENDING)
@@ -127,9 +119,7 @@ class NotificationRepository(BaseRepository[NotificationModel]):
         return {status: n for status, n in (await self.session.execute(stmt)).all()}
 
     async def delete_older_than(self, created_before: datetime) -> int:
-        """Чистка старых уведомлений. Внимание: после удаления вакансия снова может уйти пользователю,
-        если она ещё есть в выдаче, поэтому порог должен быть заметно больше срока жизни вакансий.
-        """
+
         stmt = delete(NotificationModel).where(
             NotificationModel.created_at < created_before,
             NotificationModel.status != NotificationStatus.PENDING,

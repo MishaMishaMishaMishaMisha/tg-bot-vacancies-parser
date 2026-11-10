@@ -35,44 +35,33 @@ class Region(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class SearchQuery:
-    """Один запрос к сайту (то, что уходит на сторону сайта).
-
-    frozen=True делает объект хэшируемым: его можно использовать как ключ словаря,
-    чтобы объединять одинаковые подписки разных пользователей в один запрос.
-    Всё остальное (ключевые слова и т.д.) проверяется локально.
-
-    Если источник не умеет какой-то фильтр, он бросает UnsupportedQuery:
-    молча игнорировать фильтр нельзя, пользователь получил бы неподходящие вакансии.
-    """
 
     category: str | None = None
     experience: Experience | None = None
-    city: str | None = None              # название города: «Київ»
+    city: str | None = None             
     employment: Employment | None = None
-    relocation: bool = False             # только DOU
-    english: str | None = None           # значение сайта (см. FilterOptions.groups); только Djinni
-    region: Region | None = None         # только Djinni
-    min_salary: int | None = None        # только Djinni
+    relocation: bool = False           
+    english: str | None = None       
+    region: Region | None = None    
+    min_salary: int | None = None       
 
 
 @dataclass(frozen=True, slots=True)
 class Vacancy:
-    source: str                      # "dou", "djinni", ...
-    id: str                          # id внутри источника
+    source: str                    
+    id: str                        
     title: str
     url: str
     company: str | None = None
     category: str | None = None
     locations: tuple[str, ...] = ()
     salary: str | None = None
-    # Для Djinni это время последнего обновления вакансии, а не создания.
     published: datetime | None = None
-    tags: tuple[str, ...] = ()       # прочие метки карточки: опыт, английский, домен...
-    text: str = ""                   # описание без HTML
+    tags: tuple[str, ...] = ()     
+    text: str = ""               
 
     @property
     def uid(self) -> str:
-        """Глобально уникальный ключ: id могут совпасть на разных сайтах."""
         return f"{self.source}:{self.id}"
 
 
@@ -82,7 +71,7 @@ class FilterOptions:
 
     categories: list[str] = field(default_factory=list)
     cities: list[str] = field(default_factory=list)
-    experiences: list[str] = field(default_factory=list)  # «родные» значения сайта
+    experiences: list[str] = field(default_factory=list)
     flags: list[str] = field(default_factory=list)        # фильтры-флаги: remote, ...
     # Остальные группы фильтров: имя параметра -> [{"value": ..., "label": ...}]
     groups: dict[str, list[dict]] = field(default_factory=dict)

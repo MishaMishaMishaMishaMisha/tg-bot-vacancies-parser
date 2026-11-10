@@ -1,12 +1,3 @@
-"""Фикстуры для тестов сервисов.
-
-Как устроена изоляция: сервисы открывают UnitOfWork и делают commit, поэтому обычный откат сессии,
-как в тестах репозиториев, тут не сработал бы. SavepointUnitOfWork работает на общей сессии `db_session`
-и вместо commit/rollback использует SAVEPOINT: сервисы ведут себя как в проде, а в конце теста
-внешняя транзакция откатывается и в БД ничего не остаётся.
-
-Сайты и Telegram заменены фейками: тесты не ходят в сеть.
-"""
 import itertools
 
 import pytest
@@ -37,13 +28,11 @@ from src.services.query_builder import SubscriptionQueryBuilder
 from src.services.unit_of_work import UnitOfWork
 
 
-# ============================================================ БД: изоляция и вспомогательные запросы
 
 class SavepointUnitOfWork(UnitOfWork):
-    """UnitOfWork для тестов: общая сессия, commit = RELEASE SAVEPOINT, выход без commit = ROLLBACK TO SAVEPOINT."""
 
     def __init__(self, session):
-        self.session = session   # super().__init__ не вызываем: собственная сессия не нужна
+        self.session = session
 
     async def __aenter__(self):
         self._transaction = await self.session.begin_nested()
@@ -107,7 +96,6 @@ def deactivate_in_db(db_session):
     return _deactivate
 
 
-# ============================================================ фейковые сайты и Telegram
 
 class FakeSource(JobSource):
     """Сайт вакансий без сети.
@@ -214,7 +202,6 @@ def notifier():
     return FakeNotifier()
 
 
-# ============================================================ сервисы
 
 @pytest.fixture
 def sources(dou_source, djinni_source):
@@ -252,7 +239,6 @@ def catalog_service(sources, settings):
     return FilterCatalogService(sources, settings)
 
 
-# ============================================================ фабрики данных
 
 @pytest.fixture
 def make_vacancy():

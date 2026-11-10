@@ -16,15 +16,14 @@ from .base import BaseRepository
 
 @dataclass(slots=True)
 class UpsertResult:
-    new: list[VacancyModel] = field(default_factory=list)       # раньше бот их не видел
-    existing: list[VacancyModel] = field(default_factory=list)  # уже были в базе
+    new: list[VacancyModel] = field(default_factory=list)     
+    existing: list[VacancyModel] = field(default_factory=list)  
 
 
 class VacancyRepository(BaseRepository[VacancyModel]):
     model = VacancyModel
-    CHUNK = 500  # строк в одном INSERT (у asyncpg есть лимит на число параметров запроса)
+    CHUNK = 500  # строк в одном INSERT 
 
-    # ---- чтение ----------------------------------------------------------------
 
     async def get_by_external_id(self, source: str, external_id: str) -> VacancyModel | None:
         stmt = select(VacancyModel).where(
@@ -63,15 +62,9 @@ class VacancyRepository(BaseRepository[VacancyModel]):
             stmt = stmt.where(VacancyModel.is_active.is_(True))
         return {source: n for source, n in (await self.session.execute(stmt)).all()}
 
-    # ---- запись ----------------------------------------------------------------
 
     async def upsert_many(self, vacancies: Sequence[DomainVacancy]) -> UpsertResult:
-        """Сохраняет вакансии из выдачи сайта и говорит, какие из них новые.
 
-        Новые вставляются; у уже известных обновляется last_seen_at, и они снова
-        становятся активными. Остальные поля существующих вакансий не меняются.
-        Дубликаты внутри самой пачки схлопываются.
-        """
         unique = {(v.source, v.id): v for v in vacancies}
         keys = list(unique)
         result = UpsertResult()
@@ -105,7 +98,7 @@ class VacancyRepository(BaseRepository[VacancyModel]):
         return result
 
     async def mark_inactive(self, vacancy_ids: Iterable[UUID]) -> int:
-        """Пометить вакансии закрытыми. Возвращает, сколько строк изменено."""
+   
         ids = list(vacancy_ids)
         if not ids:
             return 0
@@ -120,7 +113,7 @@ class VacancyRepository(BaseRepository[VacancyModel]):
     async def get_stale(
         self, source: str, seen_before: datetime, *, limit: int | None = None
     ) -> Sequence[VacancyModel]:
-        """Активные вакансии, которых не видели с момента seen_before (кандидаты на закрытие)."""
+
         stmt = (
             select(VacancyModel)
             .where(
@@ -135,7 +128,7 @@ class VacancyRepository(BaseRepository[VacancyModel]):
         return (await self.session.scalars(stmt)).all()
 
     async def delete_closed_before(self, closed_before: datetime) -> int:
-        """Удалить давно закрытые вакансии (их уведомления удалятся каскадом)."""
+
         stmt = delete(VacancyModel).where(
             VacancyModel.is_active.is_(False), VacancyModel.closed_at < closed_before
         )

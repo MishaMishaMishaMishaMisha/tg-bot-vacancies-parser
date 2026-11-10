@@ -35,9 +35,6 @@ class NotificationStatus(str, enum.Enum):
     FAILED = "failed"     # не удалось отправить после всех попыток
  
 class NotificationModel(Base):
-    """Связка «пользователь получил вакансию». Одна вакансия уходит пользователю один раз,
-    даже если подходит под несколько его подписок: за это отвечает уникальность (user_id, vacancy_id).
-    """
  
     __tablename__ = "notifications"
     __table_args__ = (
@@ -46,7 +43,6 @@ class NotificationModel(Base):
         Index("ix_notifications_pending", "id", postgresql_where=text("status = 'pending'")),
     )
  
-    #id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     id: Mapped[uuid.UUID] = mapped_column(
                                 SQLAlchemy_UUID(as_uuid=True),
                                 primary_key=True,
@@ -69,7 +65,7 @@ class NotificationModel(Base):
     status: Mapped[NotificationStatus] = mapped_column(
                                 Enum(
                                     NotificationStatus,
-                                    native_enum=False, # обычный VARCHAR вместо типа ENUM: проще мигрировать
+                                    native_enum=False,
                                     length=16,
                                     create_constraint=False,
                                     values_callable=lambda enum_cls: [m.value for m in enum_cls],

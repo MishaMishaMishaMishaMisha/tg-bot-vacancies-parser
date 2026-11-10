@@ -1,4 +1,3 @@
-"""/start, главное меню, помощь и события блокировки бота."""
 from __future__ import annotations
 
 import logging
@@ -63,7 +62,6 @@ async def noop(callback: CallbackQuery) -> None:
     await callback.answer()
 
 
-# ------------------------------------------------------------------ пользователь заблокировал или разблокировал бота
 
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=KICKED))
 async def user_blocked_bot(event: ChatMemberUpdated, container: ServiceContainer) -> None:

@@ -1,10 +1,4 @@
-"""Источник jobs.dou.ua.
 
-Три класса с разными обязанностями:
-  DouFeedParser     RSS (байты) -> список Vacancy.     Без сети, легко тестировать.
-  DouFiltersParser  HTML страницы -> FilterOptions.    Без сети, легко тестировать.
-  DouSource         сеть + перевод SearchQuery в параметры DOU.
-"""
 from __future__ import annotations
 
 import logging
@@ -148,8 +142,6 @@ class DouFiltersParser:
 class DouSource(JobSource):
     name = "dou"
 
-    # Experience бота -> значение параметра exp у DOU.
-    # «Без опыта» на DOU — отдельный раздел /first-job/; есть ли для него RSS, не проверено.
     _EXPERIENCE = {
         Experience.UP_TO_1: "0-1",
         Experience.Y1_3: "1-3",
@@ -193,9 +185,5 @@ class DouSource(JobSource):
         self.build_params(query)
 
     async def _places(self) -> frozenset[str]:
-        """Города + пометки: нужны, чтобы отделить компанию от локаций в заголовке.
-
-        Список городов берётся из кэша фильтров (при первом вызове скачается с сайта).
-        """
         options = await self.get_filter_options()
         return frozenset(options.cities) | LOCATION_MARKERS
